@@ -1,0 +1,7 @@
+langchain==0.3.13
+langchain-openai==0.2.14
+pandas==2.2.3
+python-dotenv==1.0.1
+requests==2.32.3
+SQLAlchemy==2.0.30
+Telethon==1.38.1
