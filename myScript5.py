@@ -90,6 +90,7 @@ def filter_pl(pl):
             filter_id = db.insert_into_filtered_pl(incorrect=pl, correct='new')
             return filter_id, 'new'
     except Exception as err:
+        db.session.rollback()
         logging.error(err)
 
 def filter_stack(stack):
@@ -112,4 +113,5 @@ def filter_stack(stack):
             filter_id = db.insert_into_filtered_stack(incorrect=stack, correct='new')
             return filter_id, 'new'
     except Exception as err:
+        db.session.rollback()
         logging.error(err)

@@ -22,7 +22,6 @@ async def handler(event):
             'date': date
         }
 
-
         if db.check_duplicate(
             source = message['source'],
             date = message['date'],
@@ -34,7 +33,9 @@ async def handler(event):
             return
 
         message = parse_vacancy_details(message)
+
         message = currency(message)
+
         message = filter_position(message)
 
         category = message['category']
@@ -79,13 +80,13 @@ async def handler(event):
 
         for p in str(pl).split(', '):
             filter_id, correct_language = filter_pl(p)
-            db.insert_pl(main_id, correct_language, filter_id)
-
+            db.insert_pl(correct_language, main_id, filter_id)
 
         for s in str(stack).split(', '):
             filter_id, correct_stack = filter_stack(s)
-            db.insert_stack(main_id, correct_stack, filter_id)
+            db.insert_stack(correct_stack, main_id, filter_id)
 
+        print('Successful')
 
         db.close()
 
