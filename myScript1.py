@@ -8,7 +8,7 @@ client = TelegramClient('anon', TG_API_ID, TG_API_HASH).start(phone='+9989420059
 channels = [
     "UstozShogird", "uzdev_jobs", "itjobstashkent", "kasbim_uz",
     "rizqimuz", "data_ish", "click_jobs", "upjobsuz",
-    "ayti_jobs", "freelance_link"
+    "ayti_jobs", "freelance_link", "qwerty78915"
 ]
 
 def clean_text(text :str, source :str):
