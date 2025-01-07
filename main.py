@@ -1,3 +1,5 @@
+import asyncio
+import logging
 from telethon import events
 from loader import db
 from myScript1 import client, channels, clean_text
@@ -92,3 +94,13 @@ async def handler(event):
 
 with client:
     client.run_until_disconnected()
+
+if __name__ == "__main__":
+    # Configure logging
+    format = '%(filename)s - %(funcName)s - %(lineno)d - %(name)s - %(levelname)s - %(message)s'
+    logging.basicConfig(
+        filename='loggging.log',  # Save error log on file
+        level=logging.ERROR,  # Set the logging level to INFO
+        format=format,  # Set the logging format
+        # stream=sys.stdout  # Log to stdout
+    )

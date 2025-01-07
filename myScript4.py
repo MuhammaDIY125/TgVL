@@ -1,7 +1,7 @@
 import pandas as pd
 import requests
 import logging
-from loader import API_URL
+from loader import API_URL, db
 
 
 def fetch_usd_to_uzs_rate():
@@ -27,6 +27,15 @@ def fetch_usd_to_uzs_rate():
         logging.error(f"Ошибка при запросе API: {err}")
         return None
 
+def save_exchange_rate_to_db(rate):
+    """
+    Сохранить курс валют в базу данных.
+    """
+    try:
+        db.insert_exchange_rate(rate)
+        logging.info(f"Курс валют USD -> UZS ({rate}) успешно сохранён в базу данных.")
+    except Exception as e:
+        logging.error(f"Ошибка при сохранении курса валют в базу данных: {e}")
 
 def convert_to_usd(salary: str, date):
     """
