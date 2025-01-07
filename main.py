@@ -1,4 +1,3 @@
-import asyncio
 import logging
 from telethon import events
 from loader import db
