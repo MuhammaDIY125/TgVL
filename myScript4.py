@@ -29,13 +29,19 @@ def fetch_usd_to_uzs_rate():
 
 def save_exchange_rate_to_db(rate):
     """
-    Сохранить курс валют в базу данных.
+    Сохранить курс валют в базу данных и закрыть соединение.
     """
     try:
         db.insert_exchange_rate(rate)
         logging.info(f"Курс валют USD -> UZS ({rate}) успешно сохранён в базу данных.")
     except Exception as e:
         logging.error(f"Ошибка при сохранении курса валют в базу данных: {e}")
+    finally:
+        # Закрываем соединение с базой данных после операции
+        if db:
+            db.close()
+            logging.info("Соединение с базой данных закрыто.")
+
 
 def convert_to_usd(salary: str, date):
     """

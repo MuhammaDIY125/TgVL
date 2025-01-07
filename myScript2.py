@@ -1,3 +1,4 @@
+import logging
 from langchain.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 from loader import OPENAI_API_KEY
@@ -76,6 +77,7 @@ def vacance_check(message :dict):
     Но даже в вакансих есть неподходящие нам позиции, к примеру менеджер продаж, поэтому этот код уберает лишь 100% неподходящие нам сообщения.
     """
     if source == 'UstozShogird' and not text.startswith('Xodim kerak:'):
+        logging.info(f"Message from '{source}' skipped as it does not start with 'Xodim kerak:'. Text: {text}")
         return None
 
     if classify_message(text) == '1':
