@@ -1,0 +1,6 @@
+.env
+env/
+__pycache__/
+asosiy.session
+asosiy.session-journal
+logging.log
