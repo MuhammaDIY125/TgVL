@@ -82,7 +82,7 @@ async def handler(event):
             if experience == 'empty':
                 experience = 'Not Specified'
             if location == 'empty':
-                location = None
+                location = 'Not Specified'
             if position == 'empty':
                 position = None
 
