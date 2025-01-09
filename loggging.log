@@ -1,0 +1,3 @@
+db.py - insert_exchange_rate - 492 - root - INFO - Обновлено: новый курс валюты 12948.1 добавлен.
+myScript4.py - save_exchange_rate_to_db - 36 - root - INFO - Курс валют USD -> UZS (12948.1) успешно сохранён в базу данных.
+myScript4.py - save_exchange_rate_to_db - 42 - root - INFO - Соединение с базой данных закрыто.

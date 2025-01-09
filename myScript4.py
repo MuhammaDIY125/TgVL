@@ -23,8 +23,8 @@ def fetch_usd_to_uzs_rate():
         for item in data:
             if item['Ccy'] == 'USD':
                 return float(item['Rate'])
-    except requests.RequestException as err:
-        logging.error(f"Ошибка при запросе API: {err}")
+    except requests.RequestException as e:
+        logging.error(f"Ошибка при запросе API: {e}")
         return None
 
 def save_exchange_rate_to_db(rate):
@@ -37,7 +37,6 @@ def save_exchange_rate_to_db(rate):
     except Exception as e:
         logging.error(f"Ошибка при сохранении курса валют в базу данных: {e}")
     finally:
-        # Закрываем соединение с базой данных после операции
         if db:
             db.close()
             logging.info("Соединение с базой данных закрыто.")
@@ -60,23 +59,31 @@ def convert_to_usd(salary: str, date):
     """
     if salary == 'empty':
         return None
-    else:
-        url = f'https://cbu.uz/uz/arkhiv-kursov-valyut/json/all/{str(date).split(' ')[0]}'
-        rest = pd.DataFrame(requests.get(url).json())
-        rest['Rate'] = rest['Rate'].astype(float)
-        parts = salary.split(' ')
-        num1 = int(parts[1])
-        num2 = int(parts[3])
-        currency = parts[4]
-        if num2 == 0:
-            return None
-        avg_salary = (num1+num2)//2
-        if currency == 'USD':
-            return avg_salary
-        if currency == 'UZS':
+
+    parts = salary.split(' ')
+    num2 = int(parts[3])
+
+    if num2 < 50:
+        return None
+
+    num1 = int(parts[1])
+    currency = parts[4]
+    avg_salary = (num1+num2)//2
+
+    if currency == 'USD':
+        return avg_salary
+
+    url = f'https://cbu.uz/uz/arkhiv-kursov-valyut/json/all/{str(date).split(' ')[0]}'
+    rest = pd.DataFrame(requests.get(url).json())
+    rest['Rate'] = rest['Rate'].astype(float)
+
+    if currency == 'UZS':
+        if num2 > 50000:
             return avg_salary / rest[rest['Ccy']=='USD']['Rate'].values[0]
         else:
-            return avg_salary * rest[rest['Ccy']==currency]['Rate'].values[0] / rest[rest['Ccy']=='USD']['Rate'].values[0]
+            return avg_salary
+    else:
+        return avg_salary * rest[rest['Ccy']==currency]['Rate'].values[0] / rest[rest['Ccy']=='USD']['Rate'].values[0]
 
 def currency(message: dict):
     """

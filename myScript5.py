@@ -60,7 +60,7 @@ def filter_position(message: dict):
 
     text = text.strip()
 
-    if text in ['Java', 'Go', 'Dart', 'JavaScript', 'Python', 'PHP', 'SQL', 'C#', 'FullStack', 'Frontend', 'Backend', 'Mobile', 'Android', 'iOS', 'AI']:
+    if text in ['Java', 'Go', 'Dart', 'JavaScript', 'Python', 'PHP', 'SQL', 'C++', 'C', 'C#', 'FullStack', 'Frontend', 'Backend', 'Mobile', 'Android', 'iOS', 'AI']:
         text = f'{text} Developer'
     elif text == '':
         text = 'empty'
@@ -70,7 +70,21 @@ def filter_position(message: dict):
     return message
 
 
-def filter_pl(pl):
+def main_filter(category: str, position: str):
+    try:
+        res = db.main_filter(category, position)
+        if res:
+            return res.id
+        else:
+            filter_id = db.insert_main_filter(
+                incorrect_category=category,
+                incorrect_position=position
+            )
+            return filter_id
+    except Exception as e:
+        logging.error(e)
+
+def filter_pl(pl: str):
     """
     Проверяет, существует ли даннай язык программирования в датабазе.
     Если язык программирования существует, возвращаются её ID и корректное значение.
@@ -80,38 +94,83 @@ def filter_pl(pl):
         pl (str): Описание должности или роли для проверки в таблице фильтрации.
     
     Возвращает:
-        tuple: ID и корректное значение (либо уже существующее, либо 'new').
+        ID: ID.
     """
     try:
         res = db.filter_pl(pl)
         if res:
-            return res.id, res.correct
+            return res.id
         else:
-            filter_id = db.insert_into_filtered_pl(incorrect=pl, correct='new')
-            return filter_id, 'new'
-    except Exception as err:
+            filter_id = db.insert_into_filtered_pl(pl)
+            return filter_id
+    except Exception as e:
         db.session.rollback()
-        logging.error(err)
+        logging.error(e)
 
-def filter_stack(stack):
+def filter_stack(stack: str):
     """
     Проверяет, существует ли даннай стэк в датабазе.
     Если стэк существует, возвращаются её ID и корректное значение.
     Если нет, строка добавляется в таблицу как 'new'.
-    
+
     Аргументы:
         stack (str): Технологический стек для проверки в таблице фильтрации.
-    
+
     Возвращает:
-        tuple: ID и корректное значение (либо уже существующее, либо 'new').
+        ID: ID.
     """
     try:
         res = db.filter_stack(stack)
         if res:
-            return res.id, res.correct
+            return res.id
         else:
-            filter_id = db.insert_into_filtered_stack(incorrect=stack, correct='new')
-            return filter_id, 'new'
-    except Exception as err:
+            filter_id = db.insert_into_filtered_stack(stack)
+            return filter_id
+    except Exception as e:
         db.session.rollback()
+        logging.error(e)
+
+
+def get_location_id(location: str):
+    try:
+        check = db.check_location(location)
+        if check:
+            return check.id
+        else:
+            location_id = db.insert_location(location)
+            return location_id
+    except Exception as err:
+        logging.error(err)
+
+def get_company_id(company: str):
+    try:
+        check = db.check_company(company)
+        if check:
+            return check.id
+        else:
+            company_id = db.insert_company(company)
+            return company_id
+    except Exception as err:
+        logging.error(err)
+
+def get_source_id(source: str):
+    try:
+        check = db.check_source(source)
+        if check:
+            return check.id
+        else:
+            source_id = db.insert_source(source)
+            return source_id
+    except Exception as err:
+        logging.error(err)
+
+def get_experience_id(experience: str):
+    try:
+        check = db.check_experience(experience)
+        if check:
+            return check.id
+        else:
+            source_id = db.insert_experience(experience)
+            return source_id
+    except Exception as err:
         logging.error(err)
