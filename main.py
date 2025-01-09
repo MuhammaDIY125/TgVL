@@ -33,13 +33,13 @@ async def handler(event):
             message = {
                 'source': event.chat.username,
                 'tg_id': event.message.id,
-                'text': clean_text(event.message.message, source),
+                'text': clean_text(event.message.message, event.chat.username),
                 'date': event.message.date
             }
 
             logging.info(f"Received message from {message['source']}, tg_id={message['tg_id']}")
 
-            if db.check_duplicate(message['source'], message['date'], message['text']):
+            if db.check_duplicate(get_source_id(message['source']), message['date'], message['text']):
                 logging.info("Duplicate message detected. Skipping...")
                 return
 

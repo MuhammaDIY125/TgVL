@@ -21,9 +21,10 @@ def update_currency_rate():
     except Exception as e:
         logging.error(f'Error occurred: {e}')
 
-# Запуск задачи каждый день в 00:10
 schedule.every().day.at("00:10").do(update_currency_rate)
 
 while True:
     schedule.run_pending()
     time.sleep(1)
+
+# update_currency_rate()

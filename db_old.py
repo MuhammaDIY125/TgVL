@@ -1,10 +1,10 @@
 from sqlalchemy import (
-    create_engine, Column, Integer, String, Float, DateTime, ForeignKey
+    create_engine, Column, Integer, String, Float, DateTime, ForeignKey, func
 )
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 import logging
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 
 Base = declarative_base()
@@ -38,13 +38,9 @@ class TGData(Base):
     main_vacancy = relationship('MainVacancy', back_populates='tg_data')
 
 class ExchangeRate(Base):
-    """
-    Таблица для хранения информации о курсе валют.
-    """
     __tablename__ = 'exchange_rates'
-    id = Column(Integer, primary_key=True)
-    rate = Column(Float)
-    timestamp = Column(DateTime)
+    rate = Column(Float, primary_key=True)
+    timestamp = Column(DateTime, server_default=func.now())
 
 class ProgrammingLanguage(Base):
     """
@@ -108,7 +104,7 @@ class Database:
         """
         try:
             self.session.query(ExchangeRate).delete()
-            exchange_rate = ExchangeRate(rate=rate, timestamp=datetime.now())
+            exchange_rate = ExchangeRate(rate=rate)
             self.session.add(exchange_rate)
             self.session.commit()
             print(f"Обновлено: новый курс валюты {rate} добавлен.")

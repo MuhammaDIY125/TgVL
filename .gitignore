@@ -4,4 +4,3 @@ __pycache__/
 asosiy.session
 asosiy.session-journal
 logging.log
-db2.py

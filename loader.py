@@ -1,5 +1,5 @@
 import os
-from db import Database
+from db_new import Database
 from dotenv import load_dotenv
 
 load_dotenv()

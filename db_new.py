@@ -1,11 +1,11 @@
 from sqlalchemy import (
-    or_, create_engine, Column, Integer, String, Float, Date, DateTime, ForeignKey, Text
+    or_, create_engine, Column, Integer, String, Float, Date, DateTime, ForeignKey, Text, func
 )
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
 import logging
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 
 Base = declarative_base()
@@ -36,6 +36,7 @@ class MainFilter(Base):
     incorrect_category = Column(String(255))
     correct_position = Column(String(255))
     incorrect_position = Column(String(255))
+    date = Column(Date, default=func.current_date())
 
 class TGData(Base):
     __tablename__ = 'tg_data'
@@ -46,9 +47,8 @@ class TGData(Base):
 
 class ExchangeRate(Base):
     __tablename__ = 'exchange_rates'
-    id = Column(Integer, primary_key=True)
-    rate = Column(Float)
-    timestamp = Column(DateTime)
+    rate = Column(Float, primary_key=True)
+    timestamp = Column(DateTime, server_default=func.now())
 
 class ProgrammingLanguage(Base):
     __tablename__ = 'programming_language'
@@ -64,7 +64,7 @@ class LanguageFilter(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     correct = Column(String(255))
     incorrect = Column(String(255))
-    date = Column(Date)
+    date = Column(Date, default=func.current_date())
 
 class Stack(Base):
     __tablename__ = 'stack'
@@ -80,27 +80,31 @@ class StackFilter(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     correct = Column(String(255))
     incorrect = Column(String(255))
-    date = Column(Date)
+    date = Column(Date, default=func.current_date())
 
 class Location(Base):
     __tablename__ = 'location'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255), unique=True, nullable=False)
+    date = Column(Date, default=func.current_date())
 
 class Company(Base):
     __tablename__ = 'company'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255), unique=True, nullable=False)
+    date = Column(Date, default=func.current_date())
 
 class Source(Base):
     __tablename__ = 'source'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255), unique=True, nullable=False)
+    date = Column(Date, default=func.current_date())
 
 class Experience(Base):
     __tablename__ = 'experience'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(255), unique=True, nullable=False)
+    date = Column(Date, default=func.current_date())
 
 
 class Database:
@@ -153,7 +157,7 @@ class Database:
         """
         return self.session.query(TGData).filter_by(source=source, tg_id=tg_id).first() is not None
 
-    def check_duplicate(self, source: str, date: str, text: str):
+    def check_duplicate(self, source, date: str, text: str):
         """
         Проверяет наличие дубликата текста вакансии за последние 30 дней.
 
@@ -165,7 +169,7 @@ class Database:
         date_lower_bound = date - timedelta(days=30)
         filtered_texts = self.session.query(TGData.text).join(MainVacancy).filter(
             MainVacancy.date.between(date_lower_bound, date),
-            MainVacancy.source == source
+            MainVacancy.source_id == source
         ).all()
 
         filtered_texts = [item[0] for item in filtered_texts]
@@ -486,7 +490,7 @@ class Database:
         """
         try:
             self.session.query(ExchangeRate).delete()
-            exchange_rate = ExchangeRate(rate=rate, timestamp=datetime.now())
+            exchange_rate = ExchangeRate(rate=rate)
             self.session.add(exchange_rate)
             self.session.commit()
             logging.info(f"Обновлено: новый курс валюты {rate} добавлен.")

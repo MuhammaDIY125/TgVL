@@ -1,3 +1,191 @@
-db.py - insert_exchange_rate - 492 - root - INFO - Обновлено: новый курс валюты 12948.1 добавлен.
-myScript4.py - save_exchange_rate_to_db - 36 - root - INFO - Курс валют USD -> UZS (12948.1) успешно сохранён в базу данных.
-myScript4.py - save_exchange_rate_to_db - 42 - root - INFO - Соединение с базой данных закрыто.
+db.py - insert_exchange_rate - 492 - root - INFO - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 12948.1 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+myScript4.py - save_exchange_rate_to_db - 36 - root - INFO - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ USD -> UZS (12948.1) пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
+myScript4.py - save_exchange_rate_to_db - 42 - root - INFO - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+myScript4.py - save_exchange_rate_to_db - 36 - root - INFO - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ USD -> UZS (12962.98) пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
+myScript4.py - save_exchange_rate_to_db - 42 - root - INFO - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+usd.py - update_currency_rate - 20 - root - INFO - Exchange rate saved successfully.
+myScript4.py - save_exchange_rate_to_db - 36 - root - INFO - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ USD -> UZS (12962.98) пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
+myScript4.py - save_exchange_rate_to_db - 42 - root - INFO - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+usd.py - update_currency_rate - 20 - root - INFO - Exchange rate saved successfully.
+myScript4.py - save_exchange_rate_to_db - 36 - root - INFO - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ USD -> UZS (12962.98) пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
+myScript4.py - save_exchange_rate_to_db - 42 - root - INFO - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+usd.py - update_currency_rate - 20 - root - INFO - Exchange rate saved successfully.
+myScript4.py - save_exchange_rate_to_db - 36 - root - INFO - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ USD -> UZS (12962.98) пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
+myScript4.py - save_exchange_rate_to_db - 42 - root - INFO - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+usd.py - update_currency_rate - 20 - root - INFO - Exchange rate saved successfully.
+myScript4.py - save_exchange_rate_to_db - 36 - root - INFO - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ USD -> UZS (12962.98) пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
+myScript4.py - save_exchange_rate_to_db - 42 - root - INFO - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+usd.py - update_currency_rate - 20 - root - INFO - Exchange rate saved successfully.
+myScript4.py - save_exchange_rate_to_db - 36 - root - INFO - пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ USD -> UZS (12962.98) пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
+myScript4.py - save_exchange_rate_to_db - 42 - root - INFO - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
+usd.py - update_currency_rate - 20 - root - INFO - Exchange rate saved successfully.
+main.py - handler - 127 - root - ERROR - An error occurred in handler: cannot access local variable 'source' where it is not associated with a value
+Traceback (most recent call last):
+  File "D:\Work\TgVL\main.py", line 36, in handler
+    'text': clean_text(event.message.message, source),
+                                              ^^^^^^
+UnboundLocalError: cannot access local variable 'source' where it is not associated with a value
+main.py - handler - 40 - root - INFO - Received message from qwerty78915, tg_id=23
+main.py - handler - 127 - root - ERROR - An error occurred in handler: Mapped instance expected for relationship comparison to object.   Classes, queries and other SQL elements are not accepted in this context; for comparison with a subquery, use MainVacancy.source.has(**criteria).
+Traceback (most recent call last):
+  File "D:\Work\TgVL\main.py", line 42, in handler
+    if db.check_duplicate(message['source'], message['date'], message['text']):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Work\TgVL\db_new.py", line 172, in check_duplicate
+    MainVacancy.source == source
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\sqlalchemy\sql\operators.py", line 582, in __eq__
+    return self.operate(eq, other)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\sqlalchemy\orm\attributes.py", line 453, in operate
+    return op(self.comparator, *other, **kwargs)  # type: ignore[no-any-return]  # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\sqlalchemy\orm\relationships.py", line 762, in __eq__
+    self.property._optimized_compare(
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\sqlalchemy\orm\relationships.py", line 1185, in _optimized_compare
+    raise sa_exc.ArgumentError(
+sqlalchemy.exc.ArgumentError: Mapped instance expected for relationship comparison to object.   Classes, queries and other SQL elements are not accepted in this context; for comparison with a subquery, use MainVacancy.source.has(**criteria).
+updates.py - _update_loop - 442 - telethon.client.updates - INFO - Got difference for channel 2272539161 updates
+main.py - handler - 40 - root - INFO - Received message from qwerty78915, tg_id=23
+main.py - handler - 127 - root - ERROR - An error occurred in handler: Mapped instance expected for relationship comparison to object.   Classes, queries and other SQL elements are not accepted in this context; for comparison with a subquery, use MainVacancy.source.has(**criteria).
+Traceback (most recent call last):
+  File "D:\Work\TgVL\main.py", line 42, in handler
+    if db.check_duplicate(message['source'], message['date'], message['text']):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Work\TgVL\db_new.py", line 172, in check_duplicate
+    MainVacancy.source == source
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\sqlalchemy\sql\operators.py", line 582, in __eq__
+    return self.operate(eq, other)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\sqlalchemy\orm\attributes.py", line 453, in operate
+    return op(self.comparator, *other, **kwargs)  # type: ignore[no-any-return]  # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\sqlalchemy\orm\relationships.py", line 762, in __eq__
+    self.property._optimized_compare(
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\sqlalchemy\orm\relationships.py", line 1185, in _optimized_compare
+    raise sa_exc.ArgumentError(
+sqlalchemy.exc.ArgumentError: Mapped instance expected for relationship comparison to object.   Classes, queries and other SQL elements are not accepted in this context; for comparison with a subquery, use MainVacancy.source.has(**criteria).
+main.py - handler - 40 - root - INFO - Received message from qwerty78915, tg_id=24
+main.py - handler - 127 - root - ERROR - An error occurred in handler: Mapped instance expected for relationship comparison to object.   Classes, queries and other SQL elements are not accepted in this context; for comparison with a subquery, use MainVacancy.source.has(**criteria).
+Traceback (most recent call last):
+  File "D:\Work\TgVL\main.py", line 42, in handler
+    if db.check_duplicate(message['source'], message['date'], message['text']):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Work\TgVL\db_new.py", line 172, in check_duplicate
+    MainVacancy.source == source
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\sqlalchemy\sql\operators.py", line 582, in __eq__
+    return self.operate(eq, other)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\sqlalchemy\orm\attributes.py", line 453, in operate
+    return op(self.comparator, *other, **kwargs)  # type: ignore[no-any-return]  # noqa: E501
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\sqlalchemy\orm\relationships.py", line 762, in __eq__
+    self.property._optimized_compare(
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\sqlalchemy\orm\relationships.py", line 1185, in _optimized_compare
+    raise sa_exc.ArgumentError(
+sqlalchemy.exc.ArgumentError: Mapped instance expected for relationship comparison to object.   Classes, queries and other SQL elements are not accepted in this context; for comparison with a subquery, use MainVacancy.source.has(**criteria).
+
+updates.py - _update_loop - 442 - telethon.client.updates - INFO - Got difference for channel 2272539161 updates
+main.py - handler - 40 - root - INFO - Received message from qwerty78915, tg_id=24
+_client.py - _send_single_request - 1026 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+main.py - handler - 127 - root - ERROR - An error occurred in handler: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************gLwA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "D:\Work\TgVL\main.py", line 46, in handler
+    if vacance_check(message):
+       ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Work\TgVL\myScript2.py", line 83, in vacance_check
+    if classify_message(text) == '1':
+       ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Work\TgVL\myScript2.py", line 56, in classify_message
+    response = llm_chain.invoke({"context": text})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\langchain_core\runnables\base.py", line 3024, in invoke
+    input = context.run(step.invoke, input, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\langchain_core\language_models\chat_models.py", line 286, in invoke
+    self.generate_prompt(
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\langchain_core\language_models\chat_models.py", line 786, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\langchain_core\language_models\chat_models.py", line 643, in generate
+    raise e
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\langchain_core\language_models\chat_models.py", line 633, in generate
+    self._generate_with_cache(
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\langchain_core\language_models\chat_models.py", line 851, in _generate_with_cache
+    result = self._generate(
+             ^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\langchain_openai\chat_models\base.py", line 717, in _generate
+    response = self.client.create(**payload)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\openai\_utils\_utils.py", line 275, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\openai\resources\chat\completions.py", line 859, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\openai\_base_client.py", line 1280, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\openai\_base_client.py", line 957, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\openai\_base_client.py", line 1061, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************gLwA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+main.py - handler - 40 - root - INFO - Received message from qwerty78915, tg_id=25
+_client.py - _send_single_request - 1026 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 401 Unauthorized"
+main.py - handler - 127 - root - ERROR - An error occurred in handler: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************gLwA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+Traceback (most recent call last):
+  File "D:\Work\TgVL\main.py", line 46, in handler
+    if vacance_check(message):
+       ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Work\TgVL\myScript2.py", line 83, in vacance_check
+    if classify_message(text) == '1':
+       ^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Work\TgVL\myScript2.py", line 56, in classify_message
+    response = llm_chain.invoke({"context": text})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\langchain_core\runnables\base.py", line 3024, in invoke
+    input = context.run(step.invoke, input, config)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\langchain_core\language_models\chat_models.py", line 286, in invoke
+    self.generate_prompt(
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\langchain_core\language_models\chat_models.py", line 786, in generate_prompt
+    return self.generate(prompt_messages, stop=stop, callbacks=callbacks, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\langchain_core\language_models\chat_models.py", line 643, in generate
+    raise e
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\langchain_core\language_models\chat_models.py", line 633, in generate
+    self._generate_with_cache(
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\langchain_core\language_models\chat_models.py", line 851, in _generate_with_cache
+    result = self._generate(
+             ^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\langchain_openai\chat_models\base.py", line 717, in _generate
+    response = self.client.create(**payload)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\openai\_utils\_utils.py", line 275, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\openai\resources\chat\completions.py", line 859, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\openai\_base_client.py", line 1280, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\openai\_base_client.py", line 957, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\diyma\anaconda3\Lib\site-packages\openai\_base_client.py", line 1061, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.AuthenticationError: Error code: 401 - {'error': {'message': 'Incorrect API key provided: sk-proj-********************************************************************************************************************************************************gLwA. You can find your API key at https://platform.openai.com/account/api-keys.', 'type': 'invalid_request_error', 'param': None, 'code': 'invalid_api_key'}}
+updates.py - _update_loop - 442 - telethon.client.updates - INFO - Got difference for channel 2272539161 updates
+main.py - handler - 42 - root - INFO - Received message from qwerty78915, tg_id=26
+_client.py - _send_single_request - 1026 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+_client.py - _send_single_request - 1026 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+main.py - handler - 57 - root - INFO - Parsed message details: {'source': 'qwerty78915', 'tg_id': 26, 'text': "Sotuv menejeri kerak\n\n O'sib boruvchi oylik, ahil jamoa va rivojlanish uchun qulay imkoniyat. \nIsh vaqtlari: 10:00 -19:00; 11:00-20:00; 14:00-22:00\nManzil: Massiv Sebzor, 52A. Eslatma: So'rovnomadagi bergan javoblaringizga qarab sizga aloqaga chiqamiz.\n\n Kompaniya: Prep.uz\n Ish turi: Offline. Toshkent shahri\n Talablar: 19-23 yosh oralig'ida bo'lish, O'zbek tilida ravon gapirish. Kirishuvchan va mas'uliyatli bo'lish. Avval sotuv sohasida ishlagan bo'lsa qo'shimcha plus () bo'la oladi.\n Maosh: Oklad (2 mln) bonus (o'rtacha 5-10 mln).\n Ish holati: aktiv\n Murojaat uchun: Ishga qabul qilinish uchun quyidagi so'rovnomani to'ldiring.\n\n @rizqimuz - Ishchi va ish beruvchini uchrashtiruvchi va yaxshilik ulashuvchi milliy platforma\n\nKanalda e'lon va reklama joylash uchun:  @rizqimuz_admin\n\n3827Postni yaqinlaringizga ulashishni unutmang!", 'date': datetime.datetime(2025, 1, 9, 5, 40, 10, tzinfo=datetime.timezone.utc), 'position': 'empty', 'experience': 'empty', 'salary': 'from 2000000 to 10000000 UZS', 'location': 'Tashkent city', 'company': 'Prep.uz', 'stack': 'empty', 'category': 'Marketing', 'programming_language': 'empty'}
+main.py - handler - 62 - root - INFO - Converted currency.
+main.py - handler - 67 - root - INFO - Filtered position.
+main.py - handler - 116 - root - INFO - Inserted main vacancy with id: 1
+main.py - handler - 126 - root - INFO - Inserted Telegram data.
+main.py - handler - 144 - root - INFO - Handler executed successfully.
+main.py - handler - 42 - root - INFO - Received message from qwerty78915, tg_id=27
+main.py - handler - 45 - root - INFO - Duplicate message detected. Skipping...
