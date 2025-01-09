@@ -16,10 +16,10 @@ class MainVacancy(Base):
     location_id = Column(Integer, ForeignKey('location.id', ondelete="CASCADE", onupdate="CASCADE"))
     company_id = Column(Integer, ForeignKey('company.id', ondelete="CASCADE", onupdate="CASCADE"))
     experience_id = Column(Integer, ForeignKey('experience.id', ondelete="CASCADE", onupdate="CASCADE"))
-    salary = Column(Float)
-    date = Column(Date)
     source_id = Column(Integer, ForeignKey('source.id', ondelete="CASCADE", onupdate="CASCADE"))
     filter_id = Column(Integer, ForeignKey('main_filter.id', ondelete="CASCADE", onupdate="CASCADE"))
+    salary = Column(Float)
+    date = Column(Date)
 
     location = relationship('Location')
     company = relationship('Company')
