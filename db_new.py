@@ -1,11 +1,12 @@
 from sqlalchemy import (
     or_, create_engine, Column, Integer, String, Float, Date, DateTime, ForeignKey, Text, func
 )
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import OperationalError, DisconnectionError
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
-import logging
 from datetime import timedelta
+import logging
+import time
 
 
 Base = declarative_base()
@@ -109,14 +110,6 @@ class Experience(Base):
 
 class Database:
     def __init__(self, host, user, password, database):
-        """
-        Инициализация подключения к базе данных.
-
-        :param host: Хост базы данных
-        :param user: Имя пользователя
-        :param password: Пароль пользователя
-        :param database: Название базы данных
-        """
         self.host = host
         self.user = user
         self.password = password
@@ -124,14 +117,12 @@ class Database:
         self.connect()
 
     def connect(self):
-        """Устанавливает соединение с базой данных."""
         self.engine = create_engine(f'mysql+mysqlconnector://{self.user}:{self.password}@{self.host}/{self.database}')
         Base.metadata.create_all(self.engine)
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
 
     def reconnect(self):
-        """Переподключение к базе данных в случае сбоя соединения."""
         try:
             logging.info("Попытка переподключения к базе данных...")
             self.connect()
@@ -140,160 +131,181 @@ class Database:
             logging.error(f"Ошибка при переподключении: {e}")
 
     def close(self):
-        """
-        Закрывает сессию базы данных.
-        """
         self.session.close()
 
     # ========================= Check  =========================
 
     def check_vacancy_exists(self, source: str, tg_id: str):
-        """
-        Проверяет, существует ли вакансия с указанным источником и Telegram ID.
-
-        :param source: Источник вакансии
-        :param tg_id: Telegram ID вакансии
-        :return: True, если вакансия существует, иначе False
-        """
-        return self.session.query(TGData).filter_by(source=source, tg_id=tg_id).first() is not None
+        try:
+            return self.session.query(TGData).filter_by(source=source, tg_id=tg_id).first() is not None
+        
+        except (OperationalError, DisconnectionError) as e:
+            logging.error(f"Ошибка подключения при проверке вакансии: {e}")
+            self.reconnect()
+            logging.info("Повторная попытка выполнения запроса...")
+            time.sleep(2)
+            return self.check_vacancy_exists(source, tg_id)
+        
+        except Exception as e:
+            logging.error(f"Ошибка при проверке вакансии: {e}")
 
     def check_duplicate(self, source, date: str, text: str):
-        """
-        Проверяет наличие дубликата текста вакансии за последние 30 дней.
+        try:
+            date_lower_bound = date - timedelta(days=30)
+            filtered_texts = self.session.query(TGData.text).join(MainVacancy).filter(
+                MainVacancy.date.between(date_lower_bound, date),
+                MainVacancy.source_id == source
+            ).all()
 
-        :param source: Источник вакансии
-        :param date: Дата вакансии
-        :param text: Текст вакансии
-        :return: True, если текст уже существует, иначе False
-        """
-        date_lower_bound = date - timedelta(days=30)
-        filtered_texts = self.session.query(TGData.text).join(MainVacancy).filter(
-            MainVacancy.date.between(date_lower_bound, date),
-            MainVacancy.source_id == source
-        ).all()
-
-        filtered_texts = [item[0] for item in filtered_texts]
-        return text in filtered_texts
-
+            filtered_texts = [item[0] for item in filtered_texts]
+            return text in filtered_texts
+        
+        except (OperationalError, DisconnectionError) as e:
+            logging.error(f"Ошибка подключения при проверке дубликатов: {e}")
+            self.reconnect()
+            logging.info("Повторная попытка выполнения запроса...")
+            time.sleep(2)
+            return self.check_duplicate(source, date, text)
+        
+        except Exception as e:
+            logging.error(f"Ошибка при проверке дубликатов: {e}")
 
     def check_location(self, location_name: str) -> Location:
-        """
-        Проверяет, существует ли локация в базе данных.
-        :param location_name: Название локации.
-        :return: Объект Location или None.
-        """
         try:
             result = self.session.query(Location).filter(Location.name == location_name).first()
             return result
-        except SQLAlchemyError as e:
-            logging.error(f"Database error: {e}")
+        
+        except (OperationalError, DisconnectionError) as e:
+            logging.error(f"Ошибка подключения при проверке локации: {e}")
             self.reconnect()
+            logging.info("Повторная попытка выполнения запроса...")
+            time.sleep(2)
+            return self.check_location(location_name)
+        
         except Exception as e:
-            logging.error(f"Unexpected error: {e}")
+            logging.error(f"Ошибка при проверке локации: {e}")
 
     def check_company(self, company_name: str) -> Company:
-        """
-        Проверяет, существует ли компания в базе данных.
-        :param company_name: Название компании.
-        :return: Объект Company или None.
-        """
         try:
             result = self.session.query(Company).filter(Company.name == company_name).first()
             return result
-        except SQLAlchemyError as e:
-            logging.error(f"Database error: {e}")
+        
+        except (OperationalError, DisconnectionError) as e:
+            logging.error(f"Ошибка подключения при проверке компании: {e}")
             self.reconnect()
+            logging.info("Повторная попытка выполнения запроса...")
+            time.sleep(2)
+            return self.check_company(company_name)
+        
         except Exception as e:
-            logging.error(f"Unexpected error: {e}")
+            logging.error(f"Ошибка при проверке компании: {e}")
 
     def check_source(self, source_name: str) -> Source:
-        """
-        Проверяет, существует ли источник в базе данных.
-        :param source_name: Название источника.
-        :return: Объект Source или None.
-        """
         try:
             result = self.session.query(Source).filter(Source.name == source_name).first()
             return result
-        except SQLAlchemyError as e:
-            logging.error(f"Database error: {e}")
+        
+        except (OperationalError, DisconnectionError) as e:
+            logging.error(f"Ошибка подключения при проверке источника: {e}")
             self.reconnect()
+            logging.info("Повторная попытка выполнения запроса...")
+            time.sleep(2)
+            return self.check_source(source_name)
+        
         except Exception as e:
-            logging.error(f"Unexpected error: {e}")
+            logging.error(f"Ошибка при проверке источника: {e}")
 
     def check_experience(self, experience_name: str) -> Experience:
-        """
-        Проверяет, существует ли уровень опыта в базе данных.
-        :param experience_name: Название уровня опыта.
-        :return: Объект Experience или None.
-        """
         try:
             result = self.session.query(Experience).filter(Experience.name == experience_name).first()
             return result
-        except SQLAlchemyError as e:
-            logging.error(f"Database error: {e}")
+        
+        except (OperationalError, DisconnectionError) as e:
+            logging.error(f"Ошибка подключения при проверке опыта: {e}")
             self.reconnect()
+            logging.info("Повторная попытка выполнения запроса...")
+            time.sleep(2)
+            return self.check_experience(experience_name)
+        
         except Exception as e:
-            logging.error(f"Unexpected error: {e}")
+            logging.error(f"Ошибка при проверке опыта: {e}")
 
     # ========================= Filter =========================
 
-    #  Programming languagae (pl)
+    # Язык программирования (pl)
     def filter_pl(self, pl: str) -> (LanguageFilter | None):
-        """
-        Фильтрует языки программирования по корректным и некорректным названиям.
-
-        :param pl: Название языка программирования
-        :return: Объект LanguageFilter или None
-        """
-        return self.session.query(LanguageFilter).filter(
-            (LanguageFilter.correct == pl) | (LanguageFilter.incorrect == pl)
-        ).first()
+        try:
+            return self.session.query(LanguageFilter).filter(
+                (LanguageFilter.correct == pl) | (LanguageFilter.incorrect == pl)
+            ).first()
+        
+        except (OperationalError, DisconnectionError) as e:
+            logging.error(f"Ошибка подключения при фильтрации языка программирования: {e}")
+            self.reconnect()
+            logging.info("Повторная попытка выполнения запроса...")
+            time.sleep(2)
+            return self.filter_pl(pl)
+        
+        except Exception as e:
+            logging.error(f"Ошибка при фильтрации языка программирования: {e}")
 
     def insert_into_filtered_pl(self, incorrect: str) -> int:
-        """
-        Добавляет исправление для языка программирования в базу данных.
+        try:
+            correction = LanguageFilter(correct='new', incorrect=incorrect)
+            self.session.add(correction)
+            self.session.commit()
+            return correction.id
+        
+        except (OperationalError, DisconnectionError) as e:
+            self.session.rollback()
+            logging.error(f"Ошибка подключения при добавлении исправления языка программирования: {e}")
+            self.reconnect()
+            logging.info("Повторная попытка выполнения запроса...")
+            time.sleep(2)
+            return self.insert_into_filtered_pl(incorrect)
+        
+        except Exception as e:
+            self.session.rollback()
+            logging.error(f"Ошибка при добавлении исправления языка программирования: {e}")
 
-        :param incorrect: Некорректное название
-        :return: ID добавленного исправления
-        """
-        correction = LanguageFilter(correct='new', incorrect=incorrect)
-        self.session.add(correction)
-        self.session.commit()
-        return correction.id
-
-    # Stack
+    # Стек
     def filter_stack(self, stack: str) -> (StackFilter | None):
-        """
-        Фильтрует стеки технологий по корректным и некорректным названиям.
-
-        :param stack: Название стека технологий
-        :return: Объект StackFilter или None
-        """
-        return self.session.query(StackFilter).filter(
-            (StackFilter.correct == stack) | (StackFilter.incorrect == stack)
-        ).first()
+        try:
+            return self.session.query(StackFilter).filter(
+                (StackFilter.correct == stack) | (StackFilter.incorrect == stack)
+            ).first()
+        
+        except (OperationalError, DisconnectionError) as e:
+            logging.error(f"Ошибка подключения при фильтрации стека технологий: {e}")
+            self.reconnect()
+            logging.info("Повторная попытка выполнения запроса...")
+            time.sleep(2)
+            return self.filter_stack(stack)
+        
+        except Exception as e:
+            logging.error(f"Ошибка при фильтрации стека технологий: {e}")
 
     def insert_into_filtered_stack(self, incorrect: str) -> int:
-        """
-        Добавляет исправление для стека технологий в базу данных.
+        try:
+            correction = StackFilter(correct='new', incorrect=incorrect)
+            self.session.add(correction)
+            self.session.commit()
+            return correction.id
+        
+        except (OperationalError, DisconnectionError) as e:
+            self.session.rollback()
+            logging.error(f"Ошибка подключения при добавлении исправления стека технологий: {e}")
+            self.reconnect()
+            logging.info("Повторная попытка выполнения запроса...")
+            time.sleep(2)
+            return self.insert_into_filtered_stack(incorrect)
+        
+        except Exception as e:
+            self.session.rollback()
+            logging.error(f"Ошибка при добавлении исправления стека технологий: {e}")
 
-        :param incorrect: Некорректное название
-        :return: ID добавленного исправления
-        """
-        correction = StackFilter(correct='new', incorrect=incorrect)
-        self.session.add(correction)
-        self.session.commit()
-        return correction.id
-
-    # Main filter
+    # Основной фильтр
     def main_filter(self, category: str, position: str) -> (MainFilter | None):
-        """
-        Проверяет данные в таблице main_filter.
-        :param category: Категория.
-        :param position: Позиция.
-        :return: Объект MainFilter или None.
-        """
         try:
             result = self.session.query(MainFilter).filter(
                 or_(
@@ -302,21 +314,18 @@ class Database:
                 )
             ).first()
             return result
-        except SQLAlchemyError as e:
-            logging.error(f"Database error: {e}")
+        
+        except (OperationalError, DisconnectionError) as e:
+            logging.error(f"Ошибка подключения при проверке основного фильтра: {e}")
             self.reconnect()
+            logging.info("Повторная попытка выполнения запроса...")
+            time.sleep(2)
+            return self.main_filter(category, position)
+        
         except Exception as e:
-            logging.error(f"Unexpected error: {e}")
+            logging.error(f"Ошибка при проверке основного фильтра: {e}")
 
     def insert_main_filter(self, incorrect_category, incorrect_position, correct_category='new', correct_position='new'):
-        """
-        Вставляет данные в таблицу main_filter.
-        :param incorrect_category: Некорректная категория.
-        :param incorrect_position: Некорректная позиция.
-        :param correct_category: Корректная категория (по умолчанию 'new').
-        :param correct_position: Корректная позиция (по умолчанию 'new').
-        :return: ID последней вставленной строки.
-        """
         try:
             new_filter = MainFilter(
                 incorrect_category=incorrect_category,
@@ -327,26 +336,24 @@ class Database:
             self.session.add(new_filter)
             self.session.commit()
             return new_filter.id
-        except SQLAlchemyError as e:
-            logging.error(f"Database error: {e}")
+        
+        except (OperationalError, DisconnectionError) as e:
+            self.session.rollback()
+            logging.error(f"Ошибка подключения при добавлении в основной фильтр: {e}")
             self.reconnect()
+            logging.info("Повторная попытка выполнения запроса...")
+            time.sleep(2)
+            return self.insert_main_filter(incorrect_category, incorrect_position, correct_category, correct_position)
+        
         except Exception as e:
-            logging.error(f"Unexpected error: {e}")
+            logging.error(f"Ошибка при добавлении в основной фильтр: {e}")
+            self.session.rollback()
 
     # ========================= Insert =========================
 
     def insert_main_vacancy(self, location_id, company_id, experience_id, source_id, filter_id, salary, date):
         """
         Добавляет основную вакансию в базу данных.
-
-        :param location_id: ID местоположения
-        :param company_id: ID компании
-        :param experience_id: ID опыта
-        :param source_id: ID источника
-        :param filter_id: ID фильтра
-        :param salary: Зарплата
-        :param date: Дата вакансии (опционально)
-        :return: ID добавленной вакансии
         """
         try:
             vacancy = MainVacancy(
@@ -361,38 +368,55 @@ class Database:
             self.session.add(vacancy)
             self.session.commit()
             return vacancy.id
+        
+        except (OperationalError, DisconnectionError) as e:
+            self.session.rollback()
+            logging.error(f"Ошибка подключения при добавлении вакансии: {e}")
+            self.reconnect()
+            time.sleep(2)
+            return self.insert_main_vacancy(location_id, company_id, experience_id, source_id, filter_id, salary, date)
+        
         except Exception as e:
             self.session.rollback()
             logging.error(f"Ошибка при добавлении вакансии: {e}")
 
+
     def insert_tg_data(self, main_vacancy_id, tg_id, text):
         """
         Добавляет данные о вакансии из Telegram в базу данных.
-
-        :param main_vacancy_id: ID основной вакансии
-        :param tg_id: Telegram ID
-        :param text: Текст вакансии
         """
         try:
             tg_data = TGData(main_vacancy_id=main_vacancy_id, tg_id=tg_id, text=text)
             self.session.add(tg_data)
             self.session.commit()
+        
+        except (OperationalError, DisconnectionError) as e:
+            self.session.rollback()
+            logging.error(f"Ошибка подключения при добавлении данных Telegram: {e}")
+            self.reconnect()
+            time.sleep(2)
+            return self.insert_tg_data(main_vacancy_id, tg_id, text)
+        
         except Exception as e:
             self.session.rollback()
             logging.error(f"Ошибка при добавлении данных Telegram: {e}")
 
-
     def insert_pl(self, vacancy_id, correct_id):
         """
         Добавляет язык программирования в базу данных.
-
-        :param vacancy_id: ID вакансии
-        :param correct_id: ID корректного названия языка
         """
         try:
             pl = ProgrammingLanguage(vacancy_id=vacancy_id, correct_id=correct_id)
             self.session.add(pl)
             self.session.commit()
+        
+        except (OperationalError, DisconnectionError) as e:
+            self.session.rollback()
+            logging.error(f"Ошибка подключения при добавлении языка программирования: {e}")
+            self.reconnect()
+            time.sleep(2)
+            return self.insert_pl(vacancy_id, correct_id)
+        
         except Exception as e:
             self.session.rollback()
             logging.error(f"Ошибка при добавлении языка программирования: {e}")
@@ -400,93 +424,111 @@ class Database:
     def insert_stack(self, vacancy_id, correct_id):
         """
         Добавляет стек технологий в базу данных.
-
-        :param vacancy_id: ID вакансии
-        :param correct_id: ID корректного названия стека
         """
         try:
             stack = Stack(vacancy_id=vacancy_id, correct_id=correct_id)
             self.session.add(stack)
             self.session.commit()
+        
+        except (OperationalError, DisconnectionError) as e:
+            self.session.rollback()
+            logging.error(f"Ошибка подключения при добавлении стека технологий: {e}")
+            self.reconnect()
+            time.sleep(2)
+            return self.insert_stack(vacancy_id, correct_id)
+        
         except Exception as e:
             self.session.rollback()
             logging.error(f"Ошибка при добавлении стека технологий: {e}")
 
-
     def insert_location(self, location: str):
         """
         Вставляет новое местоположение в таблицу `location`.
-        :param location: Название местоположения.
-        :return: ID вставленного местоположения.
         """
         try:
             new_location = Location(name=location)
             self.session.add(new_location)
             self.session.commit()
             return new_location.id
-        except SQLAlchemyError as e:
-            logging.error(f"Database error: {e}")
+        
+        except (OperationalError, DisconnectionError) as e:
+            self.session.rollback()
+            logging.error(f"Ошибка подключения при добавлении местоположения: {e}")
             self.reconnect()
+            time.sleep(2)
+            return self.insert_location(location)
+        
         except Exception as e:
-            logging.error(f"Unexpected error: {e}")
+            self.session.rollback()
+            logging.error(f"Ошибка при добавлении местоположения: {e}")
 
     def insert_company(self, company: str):
         """
         Вставляет новую компанию в таблицу `company`.
-        :param company: Название компании.
-        :return: ID вставленной компании.
         """
         try:
             new_company = Company(name=company)
             self.session.add(new_company)
             self.session.commit()
             return new_company.id
-        except SQLAlchemyError as e:
-            logging.error(f"Database error: {e}")
+        
+        except (OperationalError, DisconnectionError) as e:
+            self.session.rollback()
+            logging.error(f"Ошибка подключения при добавлении компании: {e}")
             self.reconnect()
+            time.sleep(2)
+            return self.insert_company(company)
+        
         except Exception as e:
-            logging.error(f"Unexpected error: {e}")
+            self.session.rollback()
+            logging.error(f"Ошибка при добавлении компании: {e}")
 
     def insert_source(self, source: str):
         """
         Вставляет новый источник в таблицу `source`.
-        :param source: Название источника.
-        :return: ID вставленного источника.
         """
         try:
             new_source = Source(name=source)
             self.session.add(new_source)
             self.session.commit()
             return new_source.id
-        except SQLAlchemyError as e:
-            logging.error(f"Database error: {e}")
+        
+        except (OperationalError, DisconnectionError) as e:
+            self.session.rollback()
+            logging.error(f"Ошибка подключения при добавлении источника: {e}")
             self.reconnect()
+            time.sleep(2)
+            return self.insert_source(source)
+        
         except Exception as e:
-            logging.error(f"Unexpected error: {e}")
+            self.session.rollback()
+            logging.error(f"Ошибка при добавлении источника: {e}")
 
     def insert_experience(self, experience: str):
         """
         Вставляет новый опыт в таблицу `experience`.
-        :param experience: Название опыта.
-        :return: ID вставленного опыта.
         """
         try:
             new_experience = Experience(name=experience)
             self.session.add(new_experience)
             self.session.commit()
             return new_experience.id
-        except SQLAlchemyError as e:
-            logging.error(f"Database error: {e}")
+        
+        except (OperationalError, DisconnectionError) as e:
+            self.session.rollback()
+            logging.error(f"Ошибка подключения при добавлении опыта: {e}")
             self.reconnect()
+            time.sleep(2)
+            return self.insert_experience(experience)
+        
         except Exception as e:
-            logging.error(f"Unexpected error: {e}")
+            self.session.rollback()
+            logging.error(f"Ошибка при добавлении опыта: {e}")
 
 
-    def insert_exchange_rate(self, rate):
+    def insert_exchange_rate(self, rate: float):
         """
         Обновляет курс валюты в базе данных.
-
-        :param rate: Новый курс валюты
         """
         try:
             self.session.query(ExchangeRate).delete()
@@ -494,6 +536,15 @@ class Database:
             self.session.add(exchange_rate)
             self.session.commit()
             logging.info(f"Обновлено: новый курс валюты {rate} добавлен.")
+            
+        except (OperationalError, DisconnectionError) as e:
+            self.session.rollback()
+            logging.error(f"Ошибка подключения при обновлении курса валют: {e}")
+            self.reconnect()
+            logging.info("Попытка переподключения и повторное выполнение запроса...")
+            time.sleep(2)
+            return self.insert_exchange_rate(rate)
+
         except Exception as e:
             self.session.rollback()
             logging.error(f"Ошибка при обновлении курса валют: {e}")

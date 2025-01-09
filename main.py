@@ -43,18 +43,19 @@ async def handler(event):
                 logging.info("Duplicate message detected. Skipping...")
                 return
 
-            if vacance_check(message):
-                logging.info("Message does not match vacancy criteria. Skipping...")
-                return
+            if 1:
+                if vacance_check(message):
+                    logging.info("Message does not match vacancy criteria. Skipping...")
+                    return
 
-            message = parse_vacancy_details(message)
-            logging.info(f"Parsed message details: {message}")
+                message = parse_vacancy_details(message)
+                logging.info(f"Parsed message details: {message}")
 
-            message = currency(message)
-            logging.info("Converted currency.")
+                message = currency(message)
+                logging.info("Converted currency.")
 
-            message = filter_position(message)
-            logging.info("Filtered position.")
+                message = filter_position(message)
+                logging.info("Filtered position.")
 
 
             category = message['category']
