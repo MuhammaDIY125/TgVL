@@ -1,6 +1,8 @@
 import os
-from db_new import Database
+from langchain_openai import ChatOpenAI
+from telethon import TelegramClient
 from dotenv import load_dotenv
+from db_new import Database
 
 load_dotenv()
 
@@ -16,7 +18,17 @@ SQL_USER = os.getenv("SQL_USER")
 SQL_PASSWORD = os.getenv("SQL_PASSWORD")
 SQL_DATABASE = os.getenv("SQL_DATABASE")
 
+channels = [
+    "UstozShogird", "uzdev_jobs", "itjobstashkent", "kasbim_uz",
+    "rizqimuz", "data_ish", "click_jobs", "upjobsuz",
+    "ayti_jobs", "freelance_link", "qwerty78915"
+]
+
 db = Database(SQL_IP, SQL_USER, SQL_PASSWORD, SQL_DATABASE)
+
+client = TelegramClient('asosiy', TG_API_ID, TG_API_HASH).start(phone='+998942005945')
+
+llm = ChatOpenAI(model="gpt-4o-mini", api_key=OPENAI_API_KEY)
 
 template = """
 Ты классификатор вакансий. Твоя задача — извлечь из вакансии данные по следующим пунктам:

@@ -1,15 +1,5 @@
 import re
-from telethon import TelegramClient
-from loader import TG_API_ID, TG_API_HASH
 
-
-client = TelegramClient('asosiy', TG_API_ID, TG_API_HASH).start(phone='+998942005945')
-
-channels = [
-    "UstozShogird", "uzdev_jobs", "itjobstashkent", "kasbim_uz",
-    "rizqimuz", "data_ish", "click_jobs", "upjobsuz",
-    "ayti_jobs", "freelance_link", "qwerty78915"
-]
 
 def clean_text(text :str, source :str):
     """

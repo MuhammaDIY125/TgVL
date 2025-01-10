@@ -1,7 +1,7 @@
 import logging
 from telethon import events
-from loader import db
-from myScript1 import client, channels, clean_text
+from loader import db, client, channels
+from myScript1 import clean_text
 from myScript2 import vacance_check
 from myScript3 import parse_vacancy_details
 from myScript4 import currency
@@ -43,7 +43,7 @@ async def handler(event):
                 logging.info("Duplicate message detected. Skipping...")
                 return
 
-            if 1:
+            if 'Если вакансии нету в датабазе':
                 if vacance_check(message):
                     logging.info("Message does not match vacancy criteria. Skipping...")
                     return
@@ -65,7 +65,6 @@ async def handler(event):
             company = message['company']
             source = message['source']
             text = message['text']
-            # salary = message['salary']
             pl = message['programming_language']
             stack = message['stack']
             salary_usd = str(message['salary_usd'])

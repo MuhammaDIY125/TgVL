@@ -1,11 +1,8 @@
 import re
 from langchain.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
-from loader import OPENAI_API_KEY, template
+from loader import llm, template
 
 prompt_template = ChatPromptTemplate.from_template(template)
-
-llm = ChatOpenAI(model="gpt-4o-mini", api_key=OPENAI_API_KEY)
 
 llm_chain = prompt_template | llm
 

@@ -107,6 +107,13 @@ class Experience(Base):
     name = Column(String(255), unique=True, nullable=False)
     date = Column(Date, default=func.current_date())
 
+class TGVacancy(Base):
+    __tablename__ = 'tg_vacancy'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    text = Column(Text)
+    vacancy = Column(String(255))
+    hash = Column(String(64), unique=True, nullable=False)
+
 
 class Database:
     def __init__(self, host, user, password, database):
@@ -129,6 +136,7 @@ class Database:
             logging.info("Переподключение успешно.")
         except Exception as e:
             logging.error(f"Ошибка при переподключении: {e}")
+            raise
 
     def close(self):
         self.session.close()
@@ -379,7 +387,6 @@ class Database:
         except Exception as e:
             self.session.rollback()
             logging.error(f"Ошибка при добавлении вакансии: {e}")
-
 
     def insert_tg_data(self, main_vacancy_id, tg_id, text):
         """

@@ -1,7 +1,7 @@
 import logging
 from langchain.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
-from loader import OPENAI_API_KEY
+from loader import llm
 
 
 prompt_template = ChatPromptTemplate.from_template(
@@ -39,8 +39,6 @@ IT-профессии включают:
 """
 )
 
-llm = ChatOpenAI(model="gpt-4o-mini", api_key=OPENAI_API_KEY)
-
 llm_chain = prompt_template | llm
 
 def classify_message(text):
@@ -71,11 +69,6 @@ def vacance_check(message :dict):
     source = message['source']
     text = str(message['text'])
 
-    """
-    В канале UstozShogird все вакансии начинаются с загаловка 'Xodim kerak:'. 
-    Благодаря этому мы можем заранее определить подходит ли нам это сообщение или нет.
-    Но даже в вакансих есть неподходящие нам позиции, к примеру менеджер продаж, поэтому этот код уберает лишь 100% неподходящие нам сообщения.
-    """
     if source == 'UstozShogird' and not text.startswith('Xodim kerak:'):
         logging.info(f"Message from '{source}' skipped as it does not start with 'Xodim kerak:'. Text: {text}")
         return None
