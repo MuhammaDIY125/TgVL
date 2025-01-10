@@ -1,6 +1,6 @@
 import logging
 from telethon import events
-from loader import db, client, channels
+from loader import db, client
 from myScript1 import clean_text
 from myScript2 import vacance_check
 from myScript3 import parse_vacancy_details
@@ -24,6 +24,13 @@ if __name__ == "__main__":
         format=format,
         filename='loggging.log',
     )
+
+
+channels = {
+    "UstozShogird", "uzdev_jobs", "itjobstashkent", "kasbim_uz",
+    "rizqimuz", "data_ish", "click_jobs", "upjobsuz",
+    "ayti_jobs", "freelance_link", "qwerty78915"
+}
 
 
 @client.on(events.NewMessage(chats=channels))

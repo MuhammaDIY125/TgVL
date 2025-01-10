@@ -1,69 +1,33 @@
 import re
-from langchain.prompts import ChatPromptTemplate
-from loader import llm, template
+from loader import llm_chain_parse
 
-prompt_template = ChatPromptTemplate.from_template(template)
-
-llm_chain = prompt_template | llm
-
-def extract_job_info(text):
-    """
-    Извлекает информацию о вакансии из текста сообщения.
-
-    Аргументы:
-    text (str): Текст сообщения, содержащий информацию о вакансии.
-
-    Возвращает:
-    str: Извлеченная информация о вакансии.
-    """
-    message = {"context": text}
-    response = llm_chain.invoke(message)
-    return response.content.strip()
-
-
-def modify_salary(salary: str):
-    """
-    Изменяет строку с информацией о зарплате, заменяя "empty" на найденное числовое значение.
-
-    Аргументы:
-    salary (str): Строка, содержащая информацию о зарплате.
-
-    Возвращает:
-    str: Обновленная строка зарплаты или 'empty', если числовое значение не найдено.
-    """
-    number = re.search(r'\d+', salary).group()
-    if int(number):
-        new_salary = salary.replace('empty', number)
-        return new_salary
-    else:
-        return 'empty'
 
 locations = {
-    'empty',
-    'remote',
-    'Tashkent city',
-    'Republic of Karakalpakstan',
-    'Andijan region',
-    'Bukhara region',
-    'Jizzakh region',
-    'Kashkadarya region',
-    'Navoi region',
-    'Namangan region',
-    'Samarkand region',
-    'Surkhandarya region',
-    'Syrdarya region',
-    'Tashkent region',
-    'Ferghana region',
-    'Khorezm region'
+   'empty',
+   'remote',
+   'Tashkent city',
+   'Republic of Karakalpakstan',
+   'Andijan region',
+   'Bukhara region',
+   'Jizzakh region',
+   'Kashkadarya region',
+   'Navoi region',
+   'Namangan region',
+   'Samarkand region',
+   'Surkhandarya region',
+   'Syrdarya region',
+   'Tashkent region',
+   'Ferghana region',
+   'Khorezm region'
 }
 
 experiences = {
-    'empty',
-    'No Experience',
-    '1 Year <=',
-    '1-3 Years',
-    '3 Years >'
-    }
+   'empty',
+   'No Experience',
+   '1 Year <=',
+   '1-3 Years',
+   '3 Years >'
+}
 
 categories = {
     'FullStack',
@@ -82,8 +46,39 @@ categories = {
     'No Code',
     'Developer',
     'Other'
-    }
+}
 
+
+def extract_job_info(text):
+    """
+    Извлекает информацию о вакансии из текста сообщения.
+
+    Аргументы:
+    text (str): Текст сообщения, содержащий информацию о вакансии.
+
+    Возвращает:
+    str: Извлеченная информация о вакансии.
+    """
+    message = {"context": text}
+    response = llm_chain_parse.invoke(message)
+    return response.content.strip()
+
+def modify_salary(salary: str):
+    """
+    Изменяет строку с информацией о зарплате, заменяя "empty" на найденное числовое значение.
+
+    Аргументы:
+    salary (str): Строка, содержащая информацию о зарплате.
+
+    Возвращает:
+    str: Обновленная строка зарплаты или 'empty', если числовое значение не найдено.
+    """
+    number = re.search(r'\d+', salary).group()
+    if int(number):
+        new_salary = salary.replace('empty', number)
+        return new_salary
+    else:
+        return 'empty'
 
 def parse_job_info(job_info):
     """
