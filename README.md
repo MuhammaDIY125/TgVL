@@ -1,43 +1,45 @@
-# Telegram Job Data Collection Bot
+# Бот для сбора данных о вакансиях в Telegram
 
-### Description
-A Python-based bot designed to monitor Telegram channels for job postings, process the collected data, and store it in a database for further analysis.
+### Описание
+Бот, написанный на Python, предназначен для мониторинга Telegram-каналов с вакансиями, обработки собранных данных и их сохранения в базе данных для дальнейшего анализа.
 
-### Features
+![alt text](Flowchart.jpg)
 
-1. **Telegram Channel Monitoring**
-   - Tracks multiple Telegram channels (e.g., `UstozShogird`, `uzdev_jobs`, `itjobstashkent`, etc.) for new messages.
+### Функции
 
-2. **Data Filtering**
-   - Detects and skips duplicate messages based on unique parameters (source, date, text).
-   - Filters messages to ensure they match job vacancy criteria.
+1. **Мониторинг Telegram-каналов**
+   - Отслеживает новые сообщения в нескольких Telegram-каналах (например, `UstozShogird`, `uzdev_jobs`, `itjobstashkent` и др.).
 
-3. **Data Processing**
-   - Cleans and standardizes message text.
-   - Extracts job details such as position, company, location, salary, and more.
-   - Converts salaries to USD.
-   - Categorizes job data (e.g., programming languages, tech stack).
+2. **Фильтрация данных**
+   - Определяет и пропускает дублирующиеся сообщения на основе уникальных параметров (источник, дата, текст).
+   - Фильтрует сообщения, чтобы оставить только те, которые соответствуют критериям вакансий.
 
-4. **Database Integration**
-   - Stores key vacancy details, such as location, company, experience, source, salary, and date.
-   - Saves raw Telegram message data, including message ID and text.
-   - Inserts associated programming languages and tech stacks.
+3. **Обработка данных**
+   - Очищает и стандартизирует текст сообщений.
+   - Извлекает информацию о вакансии: должность, компания, местоположение, зарплата и другие детали.
+   - Конвертирует зарплаты в доллары США.
+   - Классифицирует вакансии по категориям (например, языки программирования, используемый стек технологий).
 
-5. **Logging**
-   - Logs every operation, including message processing, filtering, database insertion, and errors, for transparency and debugging.
+4. **Интеграция с базой данных**
+   - Сохраняет основные данные о вакансиях: местоположение, компания, опыт, источник, зарплата и дата.
+   - Хранит исходный текст сообщений из Telegram, включая ID сообщения.
+   - Записывает связанные языки программирования и технологии.
 
-### Technologies
+5. **Логирование**
+   - Ведёт журнал операций, включая обработку сообщений, фильтрацию, запись в базу данных и ошибки, что обеспечивает прозрачность работы и упрощает отладку.
+
+### Технологии
 
 - **Python**
-- **Telethon**: For interaction with Telegram API.
-- **Logging**: For detailed operation tracking.
-- **SQL**: For data storage and retrieval.
-- **Custom Scripts**:
-  - Filtering and cleaning data.
-  - Extracting and categorizing job-related details.
+- **Telethon**: Для взаимодействия с Telegram API.
+- **Logging**: Для ведения подробного журнала операций.
+- **SQL**: Для хранения и обработки данных.
+- **Кастомные скрипты**:
+  - Фильтрация и очистка данных.
+  - Извлечение и классификация информации, связанной с вакансиями.
 
-### Usage Example
+### Пример использования
 
-The bot connects to Telegram, retrieves messages from predefined channels, filters and processes the data, stores unique job postings in the database, and logs all actions.
+Бот подключается к Telegram, получает сообщения из заранее заданных каналов, фильтрует и обрабатывает данные, сохраняет уникальные вакансии в базу данных и логирует все действия.
 
-This tool is ideal for automating the monitoring of job postings, analyzing data, and generating reports.
+Этот инструмент идеально подходит для автоматизации мониторинга вакансий, анализа данных и генерации отчётов.
